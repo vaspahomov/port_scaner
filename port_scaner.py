@@ -26,7 +26,7 @@ def tcp_ports_scan(hostname: str, port_start: int, port_end: int, timeout:int = 
 
         try:
             sock.sendto(message.encode('utf-8'),(targetIP, port))
-            sock.settimeout(2)
+            sock.settimeout(timeout)
             sock.recvfrom(4096)
             ports['udp']['opened'].append(port)
 
@@ -38,7 +38,7 @@ def tcp_ports_scan(hostname: str, port_start: int, port_end: int, timeout:int = 
 
     def scan_tcp_port(port: int):
         s = socket.socket(AF_INET, SOCK_STREAM)
-        s.settimeout(5)
+        s.settimeout(timeout)
 
         targetIP = gethostbyname(hostname)
         result = s.connect_ex((targetIP, port))
